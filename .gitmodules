@@ -1,0 +1,12 @@
+[submodule "lib/glitchedhttps"]
+	path = lib/glitchedhttps
+	url = https://github.com/GlitchedPolygons/glitchedhttps
+[submodule "lib/l8w8jwt"]
+	path = lib/l8w8jwt
+	url = https://github.com/GlitchedPolygons/l8w8jwt
+[submodule "lib/pwcrypt/src"]
+	path = lib/pwcrypt/src
+	url = https://github.com/GlitchedPolygons/pwcrypt
+[submodule "lib/mbedtls"]
+	path = lib/mbedtls
+	url = https://github.com/Mbed-TLS/mbedtls
