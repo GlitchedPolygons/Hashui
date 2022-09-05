@@ -10,3 +10,5 @@ This is a Qt GUI for quickly generating all kinds of hash strings/message digest
 Tested on Windows 10. Probably works on other platforms too, dunno.
 
 ![Demo GIF](https://api.files.glitchedpolygons.com/api/v1/files/hashui-demo.gif)
+
+https://glitchedpolygons.com

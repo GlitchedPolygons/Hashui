@@ -187,10 +187,10 @@ void MainWindow::on_textEdit_textChanged()
     sha3(utf8ptr, utf8len, sha3_384, sizeof(sha3_384));
     sha3(utf8ptr, utf8len, sha3_512, sizeof(sha3_512));
 
-    sha3(utf8lowercasePtr, utf8lowercaseLen, sha3_224_lowercase, sizeof(sha3_256_lowercase));
+    sha3(utf8lowercasePtr, utf8lowercaseLen, sha3_224_lowercase, sizeof(sha3_224_lowercase));
     sha3(utf8lowercasePtr, utf8lowercaseLen, sha3_256_lowercase, sizeof(sha3_256_lowercase));
-    sha3(utf8lowercasePtr, utf8lowercaseLen, sha3_384_lowercase, sizeof(sha3_256_lowercase));
-    sha3(utf8lowercasePtr, utf8lowercaseLen, sha3_512_lowercase, sizeof(sha3_256_lowercase));
+    sha3(utf8lowercasePtr, utf8lowercaseLen, sha3_384_lowercase, sizeof(sha3_384_lowercase));
+    sha3(utf8lowercasePtr, utf8lowercaseLen, sha3_512_lowercase, sizeof(sha3_512_lowercase));
 
     sha3(utf8uppercasePtr, utf8uppercaseLen, sha3_224_uppercase, sizeof(sha3_224_uppercase));
     sha3(utf8uppercasePtr, utf8uppercaseLen, sha3_256_uppercase, sizeof(sha3_256_uppercase));

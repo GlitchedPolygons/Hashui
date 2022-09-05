@@ -60,6 +60,13 @@ set_target_properties(${PROJECT_NAME}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
 )
 
+if (WIN32)
+    set_target_properties(${PROJECT_NAME}
+        PROPERTIES
+        WIN32_EXECUTABLE TRUE
+    )
+endif()
+
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(${PROJECT_NAME})
 endif()
