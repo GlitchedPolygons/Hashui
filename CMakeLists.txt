@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(Hashui VERSION 1.0 LANGUAGES CXX)
+project(Hashui VERSION 1.0 LANGUAGES C CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -24,7 +24,7 @@ set(PROJECT_SOURCES
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(Hashui
+    qt_add_executable(${PROJECT_NAME}
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
@@ -34,35 +34,32 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
     if(ANDROID)
-        add_library(Hashui SHARED
-            ${PROJECT_SOURCES}
-        )
+        add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCES})
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
-        add_executable(Hashui
-            ${PROJECT_SOURCES}
-        )
+        add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
     endif()
 endif()
 
-target_link_libraries(Hashui
+target_link_libraries(${PROJECT_NAME}
     PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
     PUBLIC mbedtls
     PUBLIC mbedx509
     PUBLIC mbedcrypto
 )
 
-target_include_directories(Hashui
+target_include_directories(${PROJECT_NAME}
     PRIVATE ${CMAKE_CURRENT_LIST_DIR}/lib/mbedtls/include
 )
 
-set_target_properties(Hashui PROPERTIES
+set_target_properties(${PROJECT_NAME}
+    PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER hashui.glitchedpolygons.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(Hashui)
+    qt_finalize_executable(${PROJECT_NAME})
 endif()

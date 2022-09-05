@@ -10,3 +10,6 @@
 [submodule "lib/mbedtls"]
 	path = lib/mbedtls
 	url = https://github.com/Mbed-TLS/mbedtls
+[submodule "lib/tiny_sha3"]
+	path = lib/tiny_sha3
+	url = https://github.com/mjosaarinen/tiny_sha3

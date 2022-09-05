@@ -6,6 +6,8 @@
 #include <mbedtls/sha256.h>
 #include <mbedtls/sha512.h>
 
+#include "lib/tiny_sha3/sha3.c"
+
 static const uint8_t CRC8_TABLE[] = {
     //
     0x00, 0x5E, 0xBC, 0xE2, 0x61, 0x3F, 0xDD, 0x83, //
@@ -137,18 +139,30 @@ void MainWindow::on_textEdit_textChanged()
     uint8_t sha256[32] = { 0x00 };
     uint8_t sha384[48] = { 0x00 };
     uint8_t sha512[64] = { 0x00 };
+    uint8_t sha3_224[28] = { 0x00 };
+    uint8_t sha3_256[32] = { 0x00 };
+    uint8_t sha3_384[48] = { 0x00 };
+    uint8_t sha3_512[64] = { 0x00 };
 
     uint8_t md5_lowercase[16] = { 0x00 };
     uint8_t sha1_lowercase[20] = { 0x00 };
     uint8_t sha256_lowercase[32] = { 0x00 };
     uint8_t sha384_lowercase[48] = { 0x00 };
     uint8_t sha512_lowercase[64] = { 0x00 };
+    uint8_t sha3_224_lowercase[28] = { 0x00 };
+    uint8_t sha3_256_lowercase[32] = { 0x00 };
+    uint8_t sha3_384_lowercase[48] = { 0x00 };
+    uint8_t sha3_512_lowercase[64] = { 0x00 };
 
     uint8_t md5_uppercase[16] = { 0x00 };
     uint8_t sha1_uppercase[20] = { 0x00 };
     uint8_t sha256_uppercase[32] = { 0x00 };
     uint8_t sha384_uppercase[48] = { 0x00 };
     uint8_t sha512_uppercase[64] = { 0x00 };
+    uint8_t sha3_224_uppercase[28] = { 0x00 };
+    uint8_t sha3_256_uppercase[32] = { 0x00 };
+    uint8_t sha3_384_uppercase[48] = { 0x00 };
+    uint8_t sha3_512_uppercase[64] = { 0x00 };
 
     mbedtls_md5(utf8ptr, utf8len, md5);
     mbedtls_sha1(utf8ptr, utf8len, sha1);
@@ -168,21 +182,36 @@ void MainWindow::on_textEdit_textChanged()
     mbedtls_sha512(utf8uppercasePtr, utf8uppercaseLen, sha384_uppercase, 1);
     mbedtls_sha512(utf8uppercasePtr, utf8uppercaseLen, sha512_uppercase, 0);
 
+    sha3(utf8ptr, utf8len, sha3_224, sizeof(sha3_224));
+    sha3(utf8ptr, utf8len, sha3_256, sizeof(sha3_256));
+    sha3(utf8ptr, utf8len, sha3_384, sizeof(sha3_384));
+    sha3(utf8ptr, utf8len, sha3_512, sizeof(sha3_512));
+
+    sha3(utf8lowercasePtr, utf8lowercaseLen, sha3_224_lowercase, sizeof(sha3_256_lowercase));
+    sha3(utf8lowercasePtr, utf8lowercaseLen, sha3_256_lowercase, sizeof(sha3_256_lowercase));
+    sha3(utf8lowercasePtr, utf8lowercaseLen, sha3_384_lowercase, sizeof(sha3_256_lowercase));
+    sha3(utf8lowercasePtr, utf8lowercaseLen, sha3_512_lowercase, sizeof(sha3_256_lowercase));
+
+    sha3(utf8uppercasePtr, utf8uppercaseLen, sha3_224_uppercase, sizeof(sha3_224_uppercase));
+    sha3(utf8uppercasePtr, utf8uppercaseLen, sha3_256_uppercase, sizeof(sha3_256_uppercase));
+    sha3(utf8uppercasePtr, utf8uppercaseLen, sha3_384_uppercase, sizeof(sha3_384_uppercase));
+    sha3(utf8uppercasePtr, utf8uppercaseLen, sha3_512_uppercase, sizeof(sha3_512_uppercase));
+
     const QString decimalFormat("%1");
 
     this->ui->textEditLowercase->setText(textLowercase);
     this->ui->textEditUppercase->setText(textUppercase);
 
     this->ui->lineEditCRC8->setText(decimalFormat.arg(r_crc8));
-    this->ui->lineEditCRC32->setText(decimalFormat.arg(r_crc32));
-    this->ui->lineEditFNV1a->setText(decimalFormat.arg(r_fnv1a));
-
     this->ui->lineEditCRC8_lowercase->setText(decimalFormat.arg(r_crc8lowercase));
-    this->ui->lineEditCRC32_lowercase->setText(decimalFormat.arg(r_crc32lowercase));
-    this->ui->lineEditFNV1a_lowercase->setText(decimalFormat.arg(r_fnv1alowercase));
-
     this->ui->lineEditCRC8_uppercase->setText(decimalFormat.arg(r_crc8uppercase));
+
+    this->ui->lineEditCRC32->setText(decimalFormat.arg(r_crc32));
+    this->ui->lineEditCRC32_lowercase->setText(decimalFormat.arg(r_crc32lowercase));
     this->ui->lineEditCRC32_uppercase->setText(decimalFormat.arg(r_crc32uppercase));
+
+    this->ui->lineEditFNV1a->setText(decimalFormat.arg(r_fnv1a));
+    this->ui->lineEditFNV1a_lowercase->setText(decimalFormat.arg(r_fnv1alowercase));
     this->ui->lineEditFNV1a_uppercase->setText(decimalFormat.arg(r_fnv1auppercase));
 
     this->ui->lineEditMD5->setText(QByteArray(reinterpret_cast<const char*>(md5), sizeof(md5)).toHex());
@@ -204,4 +233,20 @@ void MainWindow::on_textEdit_textChanged()
     this->ui->lineEditSHA512->setText(QByteArray(reinterpret_cast<const char*>(sha512), sizeof(sha512)).toHex());
     this->ui->lineEditSHA512_lowercase->setText(QByteArray(reinterpret_cast<const char*>(sha512_lowercase), sizeof(sha512_lowercase)).toHex());
     this->ui->lineEditSHA512_uppercase->setText(QByteArray(reinterpret_cast<const char*>(sha512_uppercase), sizeof(sha512_uppercase)).toHex());
+
+    this->ui->lineEditSHA3_224->setText(QByteArray(reinterpret_cast<const char*>(sha3_224), sizeof(sha3_224)).toHex());
+    this->ui->lineEditSHA3_224_lowercase->setText(QByteArray(reinterpret_cast<const char*>(sha3_224_lowercase), sizeof(sha3_224_lowercase)).toHex());
+    this->ui->lineEditSHA3_224_uppercase->setText(QByteArray(reinterpret_cast<const char*>(sha3_224_uppercase), sizeof(sha3_224_uppercase)).toHex());
+
+    this->ui->lineEditSHA3_256->setText(QByteArray(reinterpret_cast<const char*>(sha3_256), sizeof(sha3_256)).toHex());
+    this->ui->lineEditSHA3_256_lowercase->setText(QByteArray(reinterpret_cast<const char*>(sha3_256_lowercase), sizeof(sha3_256_lowercase)).toHex());
+    this->ui->lineEditSHA3_256_uppercase->setText(QByteArray(reinterpret_cast<const char*>(sha3_256_uppercase), sizeof(sha3_256_uppercase)).toHex());
+
+    this->ui->lineEditSHA3_384->setText(QByteArray(reinterpret_cast<const char*>(sha3_384), sizeof(sha3_384)).toHex());
+    this->ui->lineEditSHA3_384_lowercase->setText(QByteArray(reinterpret_cast<const char*>(sha3_384_lowercase), sizeof(sha3_384_lowercase)).toHex());
+    this->ui->lineEditSHA3_384_uppercase->setText(QByteArray(reinterpret_cast<const char*>(sha3_384_uppercase), sizeof(sha3_384_uppercase)).toHex());
+
+    this->ui->lineEditSHA3_512->setText(QByteArray(reinterpret_cast<const char*>(sha3_512), sizeof(sha3_512)).toHex());
+    this->ui->lineEditSHA3_512_lowercase->setText(QByteArray(reinterpret_cast<const char*>(sha3_512_lowercase), sizeof(sha3_512_lowercase)).toHex());
+    this->ui->lineEditSHA3_512_uppercase->setText(QByteArray(reinterpret_cast<const char*>(sha3_512_uppercase), sizeof(sha3_512_uppercase)).toHex());
 }

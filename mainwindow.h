@@ -9,18 +9,19 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow {
-  Q_OBJECT
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
 
 public:
-  MainWindow(QWidget *parent = nullptr);
-  ~MainWindow();
+    MainWindow(QWidget* parent = nullptr);
+    ~MainWindow();
 
 private slots:
-  void on_textEdit_textChanged();
+    void on_textEdit_textChanged();
 
 private:
-  Ui::MainWindow *ui;
-  void refreshLabels();
+    Ui::MainWindow* ui;
+    void refreshLabels();
 };
 #endif // MAINWINDOW_H
